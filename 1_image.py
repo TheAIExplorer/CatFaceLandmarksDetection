@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import cv2
 import tensorflow as tf
 import numpy as np
@@ -49,15 +43,20 @@ def predict_landmarks(image_input):
         
     return image
 
-# Define the Gradio input component
-image_input = gr.inputs.Image()
-
 # Create the Gradio interface
-gr.Interface(fn=predict_landmarks, inputs=image_input, outputs="image").launch(share=True)
-
-
-# In[ ]:
-
-
-
-
+demo = gr.Interface(
+    predict_landmarks, 
+    inputs = "image",
+    outputs = "image",
+    title = "Cat Facial Landmark Predictor",
+    description="Upload an image of a cat's face to predict its facial landmarks.",
+    cache_examples=True,
+    theme="default",
+    allow_flagging="manual",
+    flagging_options=["Flag as incorrect", "Flag as inaccurate"],
+    analytics_enabled=True,
+    batch=False,
+    max_batch_size=4,
+    allow_duplication=False
+)
+demo.launch()
